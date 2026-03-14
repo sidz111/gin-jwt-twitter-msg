@@ -23,7 +23,7 @@ func SetRoutes(userController *controller.UserController, postController *contro
 		post.GET("/", postController.GetAllPosts)
 		post.PUT("/", postController.UpdatePost)
 		post.DELETE("/:id", postController.DeletePost)
-		post.GET("/:userID", postController.GetPostsByUserId)
+		post.GET("/users/:userID", postController.GetPostsByUserId)
 	}
 	return r
 }

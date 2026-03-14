@@ -1,15 +1,13 @@
 package models
 
-import (
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
 type Post struct {
 	gorm.Model
 
-	UUID    string `gorm:"uniqueIndex;not null" json:"uuid"`
+	UUID    string `gorm:"type:char(36);uniqueIndex;not null" json:"uuid"`
 	Content string `gorm:"type:text;not null" json:"content"`
 
-	UserID uint
-	User   User `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE"`
+	UserID uint `gorm:"not null" json:"user_id"`
+	User   User `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"user"`
 }

@@ -9,8 +9,8 @@ type User struct {
 	Username string `gorm:"size:50;uniqueIndex;not null" json:"username"`
 	Email    string `gorm:"size:100;uniqueIndex;not null" json:"email"`
 	Password string `gorm:"size:255;not null" json:"-"`
-	Bio      string `json:"bio"`
-	// Token    string `json:"token"`
 
-	Posts []Post `gorm:"foreignKey:UserID" json:"posts"`
+	Bio string `gorm:"type:text" json:"bio"`
+
+	Posts []Post `gorm:"foreignKey:UserID;constraint:OnDelete:CASCADE;" json:"posts,omitempty"`
 }

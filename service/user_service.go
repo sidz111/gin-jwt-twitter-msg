@@ -7,6 +7,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/sidz111/jwt-twitter-msg/models"
 	"github.com/sidz111/jwt-twitter-msg/repository"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserService interface {
@@ -30,6 +31,11 @@ func (s *userService) CreateUser(ctx context.Context, user *models.User) error {
 		return err
 	}
 	user.UUID = uuid.NewString()
+	hashedPass, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	user.Password = string(hashedPass)
 	return s.repo.CreateUser(ctx, user)
 }
 func (s *userService) GetUser(ctx context.Context, id uint) (*models.User, error) {
@@ -60,9 +66,6 @@ func ValidateUser(user *models.User) error {
 	}
 	if user.Email == "" {
 		return errors.New("email required")
-	}
-	if user.Password == "" {
-		return errors.New("password required")
 	}
 	if user.Username == "" {
 		return errors.New("username required")
