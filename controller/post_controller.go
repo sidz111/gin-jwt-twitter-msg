@@ -97,7 +97,7 @@ func (c *PostController) DeletePost(ctx *gin.Context) {
 	})
 }
 func (c *PostController) GetPostsByUserId(ctx *gin.Context) {
-	id, err := strconv.Atoi(ctx.Param("userId"))
+	id, err := strconv.Atoi(ctx.Param("userID"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
