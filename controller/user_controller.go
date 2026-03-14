@@ -18,14 +18,14 @@ func NewUserController(serv service.UserService) *UserController {
 }
 
 func (c *UserController) CreateUser(ctx *gin.Context) {
-	var user *models.User
+	var user models.User
 	if err := ctx.ShouldBindJSON(&user); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
-	if err := c.serv.CreateUser(ctx.Request.Context(), user); err != nil {
+	if err := c.serv.CreateUser(ctx.Request.Context(), &user); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
@@ -67,14 +67,14 @@ func (c *UserController) GetAllUsers(ctx *gin.Context) {
 	})
 }
 func (c *UserController) UpdateUser(ctx *gin.Context) {
-	var user models.User
+	var user *models.User
 	if err := ctx.ShouldBindJSON(&user); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
 		})
 		return
 	}
-	if err := c.serv.UpdateUser(ctx, &user); err != nil {
+	if err := c.serv.UpdateUser(ctx, user); err != nil {
 		ctx.JSON(http.StatusInternalServerError, gin.H{
 			"error": err.Error(),
 		})
