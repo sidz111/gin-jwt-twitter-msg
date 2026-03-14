@@ -3,6 +3,7 @@ module github.com/sidz111/jwt-twitter-msg
 go 1.25.6
 
 require (
+	github.com/google/uuid v1.6.0
 	gorm.io/driver/mysql v1.6.0
 	gorm.io/gorm v1.31.1
 )
