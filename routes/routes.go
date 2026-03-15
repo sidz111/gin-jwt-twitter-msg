@@ -6,8 +6,11 @@ import (
 	"github.com/sidz111/jwt-twitter-msg/middleware"
 )
 
-func SetRoutes(userController *controller.UserController, postController *controller.PostController, router *gin.Engine) *gin.Engine {
+func SetRoutes(userController *controller.UserController, postController *controller.PostController, authController *controller.AuthController, router *gin.Engine) *gin.Engine {
 	r := gin.Default()
+
+	r.POST("/login", authController.Login)
+
 	user := r.Group("users")
 	{
 		user.POST("/", userController.CreateUser)

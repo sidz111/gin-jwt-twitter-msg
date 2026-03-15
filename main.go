@@ -21,12 +21,13 @@ func main() {
 	userRepo := repository.NewUserRepository(dbconfig.DB)
 	userServ := service.NewUserService(userRepo)
 	userController := controller.NewUserController(userServ)
+	authController := controller.NewAuthController(userServ)
 
 	postRepo := repository.NewPostRepository(dbconfig.DB)
 	postServ := service.NewPostService(postRepo)
 	postController := controller.NewPostController(postServ)
 
-	route := routes.SetRoutes(userController, postController, r)
+	route := routes.SetRoutes(userController, postController, authController, r)
 	route.Run(":8080")
 
 }
